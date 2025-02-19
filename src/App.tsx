@@ -1,32 +1,13 @@
 import { Fragment } from 'react/jsx-runtime'
+import FriendsList from './components/FriendsList'
 import './App.css'
-
-const friends = [
-  { name: "Rachel", quote: "No uterus, no opinion!", img: "https://static.wikia.nocookie.net/friends/images/f/f7/Rachel_Greene.jpg" },
-  { name: "Ross", quote: "We were on a break!", img: "https://static.wikia.nocookie.net/friends/images/0/0b/RossGeller.jpg" },
-  { name: "Monica", quote: "Welcome to the real world, it sucks!", img: "https://static.wikia.nocookie.net/friends/images/2/2f/Monica_Geller-Bing_Season_10.png" },
-  { name: "Chandler", quote: "Could I BE wearing any more clothes?", img: "https://static.wikia.nocookie.net/friends/images/1/10/10chandler.png" },
-  { name: "Joey", quote: "How you doin'?", img: "https://static.wikia.nocookie.net/friends/images/4/43/10joey.png" },
-  { name: "Phoebe", quote: "Smelly cat, smelly cat, what are they feeding you?", img: "https://static.wikia.nocookie.net/friends/images/5/57/10phoebe.png" }
-];
 
 function App() {
 
   return (
     <Fragment>
       <h1>Meet my Friends!</h1>
-      <input className='search-friends' type="text" id="search" placeholder="Search friends..."></input>
-      <div id="friends-list" className="list">
-        {friends.map((friend, index) => {
-          return (
-            <div key={index} className="card">
-              <img src={friend.img} alt={friend.name} className='image'/>
-              <h2>{friend.name}</h2>
-              <p>{friend.quote}</p>
-            </div>
-          )
-        })}
-      </div>
+      <FriendsList />
     </Fragment>
   )
 }
