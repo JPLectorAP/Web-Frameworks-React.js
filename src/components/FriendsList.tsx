@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FriendCard from "./FriendCard";
 import styles from "./FriendsList.module.css";
 
@@ -12,15 +13,19 @@ const friends = [
 
 function FriendsList() {
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   const handleInputChange : React.ChangeEventHandler<HTMLInputElement> = (event) => {
     console.log(event.target.value);
+    setSearchQuery(event.target.value);
   }
 
   return (
     <>
-      <input onChange={handleInputChange} className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
+      <input onChange={handleInputChange} value={searchQuery} className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
+      <p>{searchQuery && `Searching for '${searchQuery}'`}</p>
       <div id="friends-list" className={styles.list}>
-        {friends.map((friend) => {
+        {friends.filter(k => k.name.toLowerCase().includes(searchQuery.toLowerCase())).map((friend) => {
           return (
             <FriendCard key={friend.name} name={friend.name} quote={friend.quote} img={friend.img} />
           )
