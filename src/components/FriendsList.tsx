@@ -11,9 +11,14 @@ const friends = [
 ];
 
 function FriendsList() {
+
+  const handleInputChange : React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    console.log(event.target.value);
+  }
+
   return (
     <>
-      <input className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
+      <input onChange={handleInputChange} className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
       <div id="friends-list" className={styles.list}>
         {friends.map((friend) => {
           return (
