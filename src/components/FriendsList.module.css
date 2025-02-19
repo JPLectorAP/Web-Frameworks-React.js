@@ -1,0 +1,10 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.searchFriends {
+    margin-bottom: 30px;
+}

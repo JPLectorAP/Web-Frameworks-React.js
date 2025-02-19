@@ -1,4 +1,5 @@
 import FriendCard from "./FriendCard";
+import styles from "./FriendsList.module.css";
 
 const friends = [
   { name: "Rachel", quote: "No uterus, no opinion!", img: "https://static.wikia.nocookie.net/friends/images/f/f7/Rachel_Greene.jpg" },
@@ -12,8 +13,8 @@ const friends = [
 function FriendsList() {
   return (
     <>
-      <input className='search-friends' type="text" id="search" placeholder="Search friends..."></input>
-      <div id="friends-list" className="list">
+      <input className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
+      <div id="friends-list" className={styles.list}>
         {friends.map((friend) => {
           return (
             <FriendCard key={friend.name} name={friend.name} quote={friend.quote} img={friend.img} />
