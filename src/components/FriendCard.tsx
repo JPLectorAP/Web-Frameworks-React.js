@@ -1,23 +1,18 @@
 import styles from "./FriendCard.module.css";
 import { ThumbsUp } from "lucide-react";
-import { useState } from "react";
 
 interface FriendCardProps {
     name: string; 
     quote: string;
     img: string;
+    likes: number;
+    onLike: () => void;
 }
 
-function FriendCard ({ name, quote, img } : FriendCardProps) {
-
-  const [likes, setLikes] = useState<number>(0);
+function FriendCard ({ name, quote, img, likes, onLike } : FriendCardProps) {
 
   const handleImageClick = () => {
     alert(`${name} says ${quote}`);
-  }
-
-  const handleLikeBtn = () => {
-    setLikes(prevLikes => prevLikes + 1);
   }
 
   return (
@@ -26,7 +21,7 @@ function FriendCard ({ name, quote, img } : FriendCardProps) {
       <h2>{name}</h2>
       <p>{quote}</p>
       <div className={styles.likes}>
-        <ThumbsUp style={{cursor: "pointer"}} onClick={handleLikeBtn}/>
+        <ThumbsUp style={{cursor: "pointer"}} onClick={onLike}/>
         <span>{likes}</span>
       </div>
     </div>

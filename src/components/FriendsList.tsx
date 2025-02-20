@@ -14,11 +14,19 @@ const friends = [
 function FriendsList() {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [likes, setLikes] = useState<{ [key: string]: number }>({});
 
   const handleInputChange : React.ChangeEventHandler<HTMLInputElement> = (event) => {
     console.log(event.target.value);
     setSearchQuery(event.target.value);
   }
+
+  const handleLike = (name: string) => {
+    setLikes((prevLikes) => ({
+      ...prevLikes,
+      [name]: (prevLikes[name] || 0) + 1,
+    }));
+  };
 
   return (
     <>
@@ -27,7 +35,7 @@ function FriendsList() {
       <div id="friends-list" className={styles.list}>
         {friends.filter(k => k.name.toLowerCase().includes(searchQuery.toLowerCase())).map((friend) => {
           return (
-            <FriendCard key={friend.name} name={friend.name} quote={friend.quote} img={friend.img} />
+            <FriendCard key={friend.name} name={friend.name} quote={friend.quote} img={friend.img} likes={likes[friend.name] || 0} onLike={() => handleLike(friend.name)} />
           )
         })}
       </div>
