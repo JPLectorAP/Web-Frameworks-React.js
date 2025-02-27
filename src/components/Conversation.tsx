@@ -20,9 +20,9 @@ function Conversation() {
 
     const [episode, setEpisode] = useState<Episode | null>(null);
     const [visibleLines, setVisibleLines] = useState<number>(0);
-    const intervalRef = useRef<number | null>(null); // Store interval reference
-    const [isPlaying, setIsPlaying] = useState<boolean>(false); // Track play/pause state
-
+    const intervalRef = useRef<number | null>(null);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false); 
+    const titleRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
         fetch("https://raw.githubusercontent.com/JPLectorAP/friends-api/refs/heads/main/episodes.json")
@@ -60,13 +60,20 @@ function Conversation() {
     };
 
     useEffect(() => {
-        return () => stopConversation(); // Cleanup on unmount
+        return () => stopConversation();
     }, []);
+
+    useEffect(() => {
+        if (titleRef.current) titleRef.current.style.color = "#535bf2";
+    }, [episode])
+
+
+
     if (!episode) return <p>Loading...</p>;
 
     return (
         <div style={{marginTop: "50px"}}>
-            <h2>{episode.title}</h2>
+            <h2 ref={titleRef}>{episode.title}</h2>
             <p><strong>Plot</strong>: {episode.plot}</p>
             <h3>Conversations:</h3>
             {episode.conversations.slice(0, visibleLines).map((line, index) => (
