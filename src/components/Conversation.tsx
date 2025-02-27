@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface Conversation {
     said: string;
@@ -20,6 +20,8 @@ function Conversation() {
 
     const [episode, setEpisode] = useState<Episode | null>(null);
     const [visibleLines, setVisibleLines] = useState<number>(0);
+    const intervalRef = useRef<number | null>(null); // Store interval reference
+    const [isPlaying, setIsPlaying] = useState<boolean>(false); // Track play/pause state
 
 
     useEffect(() => {
@@ -33,27 +35,37 @@ function Conversation() {
             .catch(error => console.error("Error fetching data:", error));
     }, []);
 
-    useEffect(() => {
-        if (episode && episode.conversations.length > 0) {
-            setVisibleLines(0);
-            const interval = setInterval(() => {
+    const startConversation = () => {
+        if (episode && episode.conversations.length > 0 && !isPlaying) {
+            setIsPlaying(true);
+            intervalRef.current = setInterval(() => {
                 setVisibleLines(prev => {
                     if (prev < episode.conversations.length) {
                         return prev + 1;
                     } else {
+                        stopConversation(); // Stop when all lines are shown
                         return prev;
                     }
                 });
-            }, 3000);
-
-            return () => clearInterval(interval);
+            }, 1000);
         }
-    }, [episode]);
+    };
 
+    const stopConversation = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+            setIsPlaying(false);
+        }
+    };
+
+    useEffect(() => {
+        return () => stopConversation(); // Cleanup on unmount
+    }, []);
     if (!episode) return <p>Loading...</p>;
 
     return (
-        <div>
+        <div style={{marginTop: "50px"}}>
             <h2>{episode.title}</h2>
             <p><strong>Plot</strong>: {episode.plot}</p>
             <h3>Conversations:</h3>
@@ -62,6 +74,15 @@ function Conversation() {
                     <strong>{line.person}:</strong> {line.said}
                 </p>
             ))}
+
+            <div style={{ marginTop: "30px", display: "flex", gap: "10px", justifyContent: "center"}}>
+                <button onClick={startConversation} disabled={isPlaying}>
+                    Start
+                </button>
+                <button onClick={stopConversation} disabled={!isPlaying}>
+                    Stop
+                </button>
+            </div>
         </div>
     )
 }
