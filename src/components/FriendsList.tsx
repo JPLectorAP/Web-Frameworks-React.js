@@ -1,6 +1,8 @@
 import { useState } from "react";
 import FriendCard from "./FriendCard";
 import styles from "./FriendsList.module.css";
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
 
 const friends = [
   { name: "Rachel", quote: "No uterus, no opinion!", img: "https://static.wikia.nocookie.net/friends/images/f/f7/Rachel_Greene.jpg" },
@@ -16,6 +18,8 @@ function FriendsList() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [likes, setLikes] = useState<{ [key: string]: number }>({});
 
+  const { user } = useContext(UserContext)
+
   const handleInputChange : React.ChangeEventHandler<HTMLInputElement> = (event) => {
     console.log(event.target.value);
     setSearchQuery(event.target.value);
@@ -30,6 +34,7 @@ function FriendsList() {
 
   return (
     <>
+      {user && <p>Hi {user.name}, Start looking for your favourite friend!</p>}
       <input onChange={handleInputChange} value={searchQuery} className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
       <p>{searchQuery && `Searching for '${searchQuery}'`}</p>
       <div id="friends-list" className={styles.list}>
