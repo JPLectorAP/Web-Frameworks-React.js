@@ -4,6 +4,7 @@ import Conversation from './components/Conversation/Conversation';
 // React Router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from './components/Root/Root';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
         {
           path: "conversation/:id",
           element: <Conversation />
+        },
+        {
+          path: "*",
+          element: <PageNotFound />
         }
       ]
     }
