@@ -1,25 +1,32 @@
-import { UserProvider } from "./context/UserContext";
-import Navbar from "./components/Navbar";
-import FriendsList from './components/FriendsList'
-import Conversation from './components/Conversation';
-import styled from 'styled-components';
+import FriendsList from './components/HomePage/FriendsList'
+import Conversation from './components/Conversation/Conversation';
 
-const AppContainer = styled.div`
-  text-align: center;
-  font-family: 'Arial', sans-serif;
-`;
+// React Router
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from './components/Root/Root';
+
 
 function App() {
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      children: [
+        {
+          path: "",
+          element: <FriendsList />
+        },
+        {
+          path: "conversation/:id",
+          element: <Conversation />
+        }
+      ]
+    }
+  ]);
+
   return (
-    <UserProvider>
-      <Navbar />
-      <AppContainer>
-        <h1 style={{fontSize: "3.2em", lineHeight: "1.1"}}>Meet my Friends!</h1>
-        <FriendsList />
-        <Conversation />
-      </AppContainer>
-    </UserProvider>
+    <RouterProvider router={router} />
   )
 }
 

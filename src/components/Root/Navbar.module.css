@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 200px;
+}
+
+.navItems {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    list-style: none;
+}
+
+.navItem {
+    text-decoration: none;
+    color: #213547;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.isActive {
+    color: #646cff;
+    font-size: 1.2em;
+}

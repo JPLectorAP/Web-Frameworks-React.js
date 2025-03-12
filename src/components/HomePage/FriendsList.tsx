@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FriendCard from "./FriendCard";
 import styles from "./FriendsList.module.css";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
 
 const friends = [
@@ -34,6 +34,7 @@ function FriendsList() {
 
   return (
     <>
+      <h1 style={{ fontSize: "3.2em", lineHeight: "1.1" }}>Meet my Friends!</h1>
       {user && <p>Hi {user.name}, Start looking for your favourite friend!</p>}
       <input onChange={handleInputChange} value={searchQuery} className={styles.searchFriends} type="text" id="search" placeholder="Search friends..."></input>
       <p>{searchQuery && `Searching for '${searchQuery}'`}</p>

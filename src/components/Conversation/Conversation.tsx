@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 
 interface Conversation {
     said: string;
@@ -24,16 +25,27 @@ function Conversation() {
     const [isPlaying, setIsPlaying] = useState<boolean>(false); 
     const titleRef = useRef<HTMLHeadingElement>(null);
 
+    const { id } = useParams<{ id: string }>();
+
     useEffect(() => {
         fetch("https://raw.githubusercontent.com/JPLectorAP/friends-api/refs/heads/main/episodes.json")
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
-                    setEpisode(data[0]);
+                    const episodeId = parseInt(id!);
+                    if (!isNaN(episodeId)) {
+                        setEpisode(data[episodeId - 1]);
+                    }
                 }
             })
             .catch(error => console.error("Error fetching data:", error));
-    }, []);
+
+        return () => {
+            stopConversation()
+            setVisibleLines(0);
+        };
+        
+    }, [id]);
 
     const startConversation = () => {
         if (episode && episode.conversations.length > 0 && !isPlaying) {
@@ -43,7 +55,7 @@ function Conversation() {
                     if (prev < episode.conversations.length) {
                         return prev + 1;
                     } else {
-                        stopConversation(); // Stop when all lines are shown
+                        stopConversation();
                         return prev;
                     }
                 });
