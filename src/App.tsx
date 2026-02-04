@@ -10,10 +10,11 @@ function App() {
 
   return (
     <AppContainer>
-      <h1 style={{fontSize: "3.2em", lineHeight: "1.1"}}>Meet my Friends!</h1>
+      {/* CSS in JS */}
+      <h1 style={{ fontSize: "3.2em", lineHeight: "1.1" }}>Meet my Friends!</h1>
       <FriendsList />
     </AppContainer>
-  )
+  );
 }
 
 export default App;

@@ -11,9 +11,10 @@ function FriendCard ({ name, quote, img } : FriendCardProps) {
     <div className={styles.card}>
       <img src={img} alt={name} className={styles.image} />
       <h2>{name}</h2>
-      <p>{quote}</p>
+      {/* CSS in JS */}
+      <p style={{ color: "red" }}>{quote}</p>
     </div>
-  )
+  );
 }
 
 export default FriendCard;
